@@ -27,12 +27,12 @@ import { Facebook } from "@ionic-native/facebook";
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyAe3xgjZPL9MZOnIWeZCnqkbS_yQ90WHac",
-    authDomain: "rsu-sport-ite465.firebaseapp.com",
-    databaseURL: "https://rsu-sport-ite465.firebaseio.com",
-    projectId: "rsu-sport-ite465",
-    storageBucket: "rsu-sport-ite465.appspot.com",
-    messagingSenderId: "769425239891"
+  apiKey: "firebase-api-key",
+    authDomain: "xxxxxxxx",
+    databaseURL: "xxxxxxxxxxx",
+    projectId: "xxxxxxxxxxx",
+    storageBucket: "xxxxxxxxxxx",
+    messagingSenderId: "xxxxxxxxxxxx"
 };
 
 @NgModule({
