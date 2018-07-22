@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
+    <ion-header>
+    <ion-navbar>
+    <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Sports</ion-title>
+    </ion-navbar>
+    </ion-header>
+<ion-content padding>
+
+
+    <!--<button ion-button round block color="danger" (click)="logoutGG()">ออกจากระบบ</button> -->
+  <button *ngIf="form=='hide'" ion-button round block color="secondary" (click)="wantToAdd()">เพิ่มรายการใหม่</button>
+  <button *ngIf="form!='hide'" ion-button round block color="danger" (click)="form='hide'">Hide Form</button>
+
+  <form (ngSubmit)="listingsOperation(tmp, action)" *ngIf="form != 'hide'">
+      <ion-list>
+          <ion-item>
+        <ion-label>คณะ A</ion-label>
+          <ion-select [(ngModel)]="tmp.faculty_a" name="faculty_a">
+            <ion-option *ngFor="let option of facultyAdd | async" [value]="option.name">{{option.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+            <ion-item>
+                <ion-label>คณะ B</ion-label>
+                  <ion-select [(ngModel)]="tmp.faculty_b" name="faculty_b">
+                      <ion-option *ngFor="let option of facultyAdd | async" [value]="option.name">{{option.name}}</ion-option>
+                  </ion-select>
+                </ion-item>
+                    <ion-item>
+                        <ion-label>เลือกกีฬา:</ion-label>
+                          <ion-select [(ngModel)]="tmp.sport" name="sport">
+                            <ion-option *ngFor="let option of sportAdd | async" [value]="option.name">{{option.name}}</ion-option>
+                          </ion-select>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>แข่งวันที่</ion-label>
+                            <ion-datetime displayFormat="MMM DD YYYY hh:mm A" pickerFormat="MMM DD YYYY h mm A" [(ngModel)]="tmp.month" name="TimeStart"></ion-datetime>
+                          </ion-item>
+                        <ion-item>
+                            <ion-label>สถานะ:</ion-label>
+                              <ion-select [(ngModel)]="tmp.status" name="status">
+                                <ion-option *ngFor="let option of statusAdd | async" [value]="option.status_name">{{option.status_name}}</ion-option>
+                              </ion-select>
+                            </ion-item>
+        <button *ngIf="form=='add'" ion-button round block type="submit" color="secondary" (click)="action='add'">Add</button>
+        <button *ngIf="form=='edit'" ion-button round block type="submit" color="secondary" (click)="action='update'">Update</button>
+      </ion-list>
+    </form>
+
+
+
+
+
+    <!--<div padding>
+      <ion-segment [(ngModel)]="listings">
+        <ion-segment-button value=''>
+          เมื่อวาน
+        </ion-segment-button>
+        <ion-segment-button value=''>
+          วันนี้
+        </ion-segment-button>
+        <ion-segment-button value=''>
+          พรุ่งนี้
+        </ion-segment-button>
+      </ion-segment>
+    </div> -->
+
+
+
+
+  <!--<form id="branch" (ngSubmit)="branchOperation(tmp, action)" *ngIf="form != 'hide'">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>ชื่อสาขา</ion-label>
+          <ion-input [(ngModel)]="tmp.name" type="text" name="name"></ion-input>
+        </ion-item>
+
+
+        <button *ngIf="form=='add'" ion-button round block type="submit" (click)="action='add'">Add</button>
+        <button *ngIf="form=='edit'" ion-button round block type="submit" (click)="action='update'">Update</button>
+      </ion-list>
+    </form>
+
+  <form id="faculty" (ngSubmit)="facultyOperation(tmp, action)" *ngIf="form != 'hide'">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>ชื่อคณะ</ion-label>
+        <ion-input [(ngModel)]="tmp.name" type="text" name="name"></ion-input>
+      </ion-item>
+
+
+      <button *ngIf="form=='add'" ion-button round block type="submit" (click)="action='add'">Add</button>
+      <button *ngIf="form=='edit'" ion-button round block type="submit" (click)="action='update'">Update</button>
+    </ion-list>
+  </form> -->
+
+
+  <ion-list *ngIf="listings">
+    <ion-item *ngFor="let listings of listings | async">
+
+      <ion-grid>
+        <ion-row padding>
+          <ion-col col-md-2>
+              {{listings.sport}}
+
+          </ion-col>
+          <ion-col col-md-2>
+              {{listings.faculty_a}}
+          </ion-col>
+          <!--<ion-col col-md-2>
+              <ion-icon name="fastforward" item-start></ion-icon>
+          </ion-col> -->
+          <ion-col col-md-2>
+              {{listings.faculty_b}}
+
+          </ion-col>
+          <ion-col col-md-2>
+              <ion-icon name="ios-timer" item-start> {{ listings.month | momentFilter}}</ion-icon>
+          </ion-col>
+            <ion-col col-md-4>
+                {{listings.status}}
+
+              </ion-col>
+
+        </ion-row>
+      </ion-grid>
+
+
+
+
+<ion-icon name="create" (click)="listingsOperation(listings, 'edit')" item-end></ion-icon>
+        <ion-icon name="trash" (click)="listingsOperation(listings, 'delete')" item-end></ion-icon>
+
+    </ion-item>
+  </ion-list>
+
+
+
+<!-- <p>รายชื่อคณะ</p>
+  <ion-list *ngIf="faculty">
+    <ion-item *ngFor="let faculty of faculty | async">
+
+        <ion-row>
+          <ion-col col-6>
+            {{faculty.name}}
+          </ion-col>
+        </ion-row>
+
+<ion-icon name="create" (click)="facultyOperation(faculty, 'edit')" item-end></ion-icon>
+        <ion-icon name="trash" (click)="facultyOperation(faculty, 'delete')" item-end></ion-icon>
+
+    </ion-item>
+  </ion-list>
+
+
+
+  <form (ngSubmit)="branchOperation(tmp, action)" *ngIf="form != 'hide'">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>ชื่อสาขา</ion-label>
+          <ion-input [(ngModel)]="tmp.name" type="text" name="name"></ion-input>
+        </ion-item>
+
+        <button *ngIf="form=='add'" ion-button round block type="submit" (click)="action='add'">Add</button>
+        <button *ngIf="form=='edit'" ion-button round block type="submit" (click)="action='update'">Update</button>
+      </ion-list>
+    </form>
+
+
+  <p>รายชื่อสาขา</p>
+  <ion-list *ngIf="branch">
+    <ion-item *ngFor="let branch of branch | async">
+
+        <ion-row>
+          <ion-col col-6>
+            {{branch.name}}
+          </ion-col>
+        </ion-row>
+
+<ion-icon name="create" (click)="branchOperation(branch, 'edit')" item-end></ion-icon>
+        <ion-icon name="trash" (click)="branchOperation(branch, 'delete')" item-end></ion-icon>
+
+    </ion-item>
+  </ion-list> -->
+
+
+
+
+
+</ion-content>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
