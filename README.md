@@ -1,1 +1,1 @@
-# ite-rsu-sports
+# rsu-sport.github.io
